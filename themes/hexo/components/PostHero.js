@@ -29,9 +29,10 @@ export default function PostHero({ post, siteInfo }) {
         priority={true}
         src={headerImage}
         className='w-full h-full object-cover object-center absolute top-0'
+        alt={post.title || siteInfo?.title}
       />
 
-      <header
+      <div
         id='article-header-cover'
         className='bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center '>
         <div className='mt-10'>
@@ -93,7 +94,7 @@ export default function PostHero({ post, siteInfo }) {
             )}
           </div>
         </div>
-      </header>
+      </div>
     </div>
   )
 }
