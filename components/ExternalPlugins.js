@@ -61,44 +61,15 @@ const ExternalPlugin = props => {
     NOTION_CONFIG
   )
   const CHATBASE_ID = siteConfig('CHATBASE_ID', null, NOTION_CONFIG)
-  const COMMENT_DAO_VOICE_ID = siteConfig(
-    'COMMENT_DAO_VOICE_ID',
-    null,
-    NOTION_CONFIG
-  )
   const AD_WWADS_ID = siteConfig('AD_WWADS_ID', null, NOTION_CONFIG)
-  const COMMENT_ARTALK_SERVER = siteConfig(
-    'COMMENT_ARTALK_SERVER',
-    null,
-    NOTION_CONFIG
-  )
-  const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS', null, NOTION_CONFIG)
-  const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID', null, NOTION_CONFIG)
-  const COMMENT_GITTER_ROOM = siteConfig(
-    'COMMENT_GITTER_ROOM',
-    null,
-    NOTION_CONFIG
-  )
-  const ANALYTICS_BAIDU_ID = siteConfig(
-    'ANALYTICS_BAIDU_ID',
-    null,
-    NOTION_CONFIG
-  )
+  const ANALYTICS_BAIDU_ID = siteConfig('ANALYTICS_BAIDU_ID', null, NOTION_CONFIG)
   const ANALYTICS_CNZZ_ID = siteConfig('ANALYTICS_CNZZ_ID', null, NOTION_CONFIG)
-  const ANALYTICS_GOOGLE_ID = siteConfig(
-    'ANALYTICS_GOOGLE_ID',
-    null,
-    NOTION_CONFIG
-  )
+  const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID', null, NOTION_CONFIG)
   const MATOMO_HOST_URL = siteConfig('MATOMO_HOST_URL', null, NOTION_CONFIG)
   const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID', null, NOTION_CONFIG)
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID', null, NOTION_CONFIG)
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK', null, NOTION_CONFIG)
-  const DIFY_CHATBOT_ENABLED = siteConfig(
-    'DIFY_CHATBOT_ENABLED',
-    null,
-    NOTION_CONFIG
-  )
+  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED', null, NOTION_CONFIG)
   const TIANLI_KEY = siteConfig('TianliGPT_KEY', null, NOTION_CONFIG)
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '', NOTION_CONFIG)
   const CLARITY_ID = siteConfig('CLARITY_ID', null, NOTION_CONFIG)
@@ -208,18 +179,13 @@ const ExternalPlugin = props => {
       {TIANLI_KEY && <TianliGPT />}
       <VConsole />
       {ENABLE_NPROGRSS && <LoadingProgress />}
-      <AosAnimation />
+      <AOSAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
       {COZE_BOT_ID && <Coze />}
 
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (
         <>
           <script id='LA_COLLECT' src='//sdk.51.la/js-sdk-pro.min.js' defer />
-          {/* <script async dangerouslySetInnerHTML={{
-              __html: `
-                    LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true,autoTrack:true})
-                    `
-            }} /> */}
         </>
       )}
 
@@ -260,100 +226,10 @@ const ExternalPlugin = props => {
                   if (y && y.parentNode) {
                     y.parentNode.insertBefore(t, y);
                   } else {
-                    l.head.appendChild(t);
+                    document.body.appendChild(t);
                   }
                 })(window, document, "clarity", "script", "${CLARITY_ID}");
                 `
-            }}
-          />
-        </>
-      )}
-
-      {COMMENT_DAO_VOICE_ID && (
-        <>
-          {/* DaoVoice 反馈 */}
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(i, s, o, g, r, a, m) {
-                  i["DaoVoiceObject"] = r;
-                  i[r] = i[r] || function() {
-                    (i[r].q = i[r].q || []).push(arguments);
-                  };
-                  i[r].l = 1 * new Date();
-                  a = s.createElement(o);
-                  m = s.getElementsByTagName(o)[0];
-                  a.async = 1;
-                  a.src = g;
-                  a.charset = "utf-8";
-                  if (m && m.parentNode) {
-                    m.parentNode.insertBefore(a, m);
-                  } else {
-                    s.head.appendChild(a);
-                  }
-                })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/daf1a94b.js", "daovoice")
-                `
-            }}
-          />
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-             daovoice('init', {
-                app_id: "${COMMENT_DAO_VOICE_ID}"
-              });
-              daovoice('update');
-              `
-            }}
-          />
-        </>
-      )}
-
-      {/* HILLTOP广告验证 */}
-      {HILLTOP_ADS_META_ID && (
-        <Head>
-          <meta name={HILLTOP_ADS_META_ID} content={HILLTOP_ADS_META_ID} />
-        </Head>
-      )}
-
-      {AD_WWADS_ID && (
-        <>
-          <Head>
-            {/* 提前连接到广告服务器 */}
-            <link rel='preconnect' href='https://cdn.wwads.cn' />
-          </Head>
-          <ExternalScript
-            type='text/javascript'
-            src='https://cdn.wwads.cn/js/makemoney.js'
-          />
-        </>
-      )}
-
-      {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
-
-      {COMMENT_ARTALK_SERVER && <script defer src={COMMENT_ARTALK_JS} />}
-
-      {COMMENT_TIDIO_ID && (
-        <script async src={`//code.tidio.co/${COMMENT_TIDIO_ID}.js`} />
-      )}
-
-      {/* gitter聊天室 */}
-      {COMMENT_GITTER_ROOM && (
-        <>
-          <script
-            src='https://sidecar.gitter.im/dist/sidecar.v1.js'
-            async
-            defer
-          />
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-            ((window.gitter = {}).chat = {}).options = {
-              room: '${COMMENT_GITTER_ROOM}'
-            };
-            `
             }}
           />
         </>
@@ -400,13 +276,13 @@ const ExternalPlugin = props => {
             async
             dangerouslySetInnerHTML={{
               __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${ANALYTICS_GOOGLE_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${ANALYTICS_GOOGLE_ID}', {
+                      page_path: window.location.pathname,
+                    });
+                    `
             }}
           />
         </>
@@ -418,20 +294,68 @@ const ExternalPlugin = props => {
           async
           dangerouslySetInnerHTML={{
             __html: `
-              var _paq = window._paq = window._paq || [];
-              _paq.push(['trackPageView']);
-              _paq.push(['enableLinkTracking']);
-              (function() {
-                var u="//${MATOMO_HOST_URL}/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '${MATOMO_SITE_ID}']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-              })();
-            `
+          var _paq = window._paq = window._paq || [];
+          _paq.push(['trackPageView']);
+          _paq.push(['enableLinkTracking']);
+          (function() {
+            var u="//${MATOMO_HOST_URL}/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '${MATOMO_SITE_ID}']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+          })();
+        `
           }}
         />
       )}
+
+      {/* 广告植入 */}
+      {HILLTOP_ADS_META_ID && (
+        <script
+          async
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function(__htas){
+              var d = document,
+                  s = d.createElement('script'),
+                  l = d.scripts[d.scripts.length - 1];
+              s.settings = __htas || {};
+              s.src = "//appsha1.hotelscombiapp.com/"+__htas.meta_id+".js";
+              l.parentNode.insertBefore(s, l);
+            })({meta_id: '${HILLTOP_ADS_META_ID}'});
+          `
+          }}
+        />
+      )}
+
+      {/* 广告植入 */}
+      {AD_WWADS_ID && (
+        <>
+          <script
+            async
+            type='text/javascript'
+            src='https://cdn.wwads.cn/js/makemoney.js'
+          />
+          <script
+            async
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(){
+                  var el = document.createElement("script");
+                  el.src = "https://cdn.wwads.cn/js/macro.js";
+                  el.onload=function(){window.WWAds.register('${AD_WWADS_ID}')};
+                  document.getElementsByTagName("head")[0].appendChild(el)
+                })()
+                `
+            }}
+          />
+        </>
+      )}
+
+      <Head>
+        {/* 自定义外部脚本 */}
+        <ExternalScript />
+      </Head>
     </>
   )
 }
@@ -493,18 +417,11 @@ const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), {
 const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
   ssr: false
 })
-const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
+const AOSAnimation = dynamic(() => import('@/components/AOSAnimation'), {
   ssr: false
 })
-
-const Coze = dynamic(() => import('@/components/Coze'), {
-  ssr: false
-})
-const LA51 = dynamic(() => import('@/components/LA51'), {
-  ssr: false
-})
-const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
-  ssr: false
-})
+const LA51 = dynamic(() => import('@/components/LA51'), { ssr: false })
+const TianliGPT = dynamic(() => import('@/components/TianliGPT'), { ssr: false })
+const Coze = dynamic(() => import('@/components/Coze'), { ssr: false })
 
 export default ExternalPlugin
