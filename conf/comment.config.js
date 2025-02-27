@@ -11,5 +11,10 @@ module.exports = {
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || false, // 博客列表是否显示评论数
   COMMENT_TWIKOO_CDN_URL:
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL ||
-    'https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js' // twikoo客户端cdn
+    'https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js', // twikoo客户端cdn
+  
+  // 性能优化配置
+  COMMENT_TWIKOO_DEFER_LOAD: true, // 延迟加载评论区
+  COMMENT_TWIKOO_PRELOAD: true, // 预加载评论区资源
+  COMMENT_TWIKOO_LAZY_LOAD: true // 懒加载评论区图片
 }
