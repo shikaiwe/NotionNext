@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/config'
 import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { memo } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import TwikooResourceLoader from './TwikooResourceLoader'
 
@@ -20,16 +20,21 @@ const Comment = memo(({ frontMatter, className }) => {
     triggerOnce: true
   })
 
-  // 当连接中有特殊参数时跳转到评论区
-  if (isBrowser && router.query.target === 'comment') {
-    setTimeout(() => {
-      const url = router.asPath.replace('?target=comment', '')
-      history.replaceState({}, '', url)
-      document
-        ?.getElementById('comment')
-        ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }, 1000)
-  }
+  // 使用 useCallback 优化滚动处理函数
+  const handleCommentScroll = useCallback(() => {
+    const url = router.asPath.replace('?target=comment', '')
+    history.replaceState({}, '', url)
+    document
+      ?.getElementById('comment')
+      ?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }, [router.asPath])
+
+  // 优化副作用处理
+  useEffect(() => {
+    if (isBrowser && router.query.target === 'comment') {
+      setTimeout(handleCommentScroll, 1000)
+    }
+  }, [router.query.target, handleCommentScroll])
 
   if (!frontMatter || isSearchEngineBot || frontMatter?.comment === 'Hide') {
     return null
@@ -47,9 +52,9 @@ const Comment = memo(({ frontMatter, className }) => {
         ref={ref}
         className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
         {!inView ? (
-          <div className='text-center'>
+          <div className='text-center' role="status" aria-label="加载中">
             <span className='loading'>Loading</span>
-            <i className='fas fa-spinner animate-spin text-3xl' />
+            <i className='fas fa-spinner animate-spin text-3xl' aria-hidden="true" />
           </div>
         ) : COMMENT_TWIKOO_ENV_ID && (
           <div key='Twikoo'>
@@ -67,9 +72,9 @@ const TwikooComponent = memo(dynamic(
   { 
     ssr: false,
     loading: () => (
-      <div className='text-center'>
+      <div className='text-center' role="status" aria-label="加载评论组件中">
         <span className='loading'>Loading Twikoo</span>
-        <i className='fas fa-spinner animate-spin text-3xl' />
+        <i className='fas fa-spinner animate-spin text-3xl' aria-hidden="true" />
       </div>
     )
   }
